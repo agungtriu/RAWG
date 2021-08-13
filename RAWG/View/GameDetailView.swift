@@ -153,7 +153,9 @@ struct GameDetailView: View {
                 }
             }
         }.onAppear {
-            self.gameDetailViewModel.loadGameDataById(gameId: String(self.gameId))
+            if self.gameDetailViewModel.gameDetail.name.isEmpty {
+                self.gameDetailViewModel.loadGameDataById(gameId: String(self.gameId))
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarTitle(Text("RAWG"))

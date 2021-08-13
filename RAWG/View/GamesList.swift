@@ -19,23 +19,24 @@ struct GamesList: View {
                 if gamesViewModel.loading {
                     LoadingIndicator(color: Color.blue, size: 50)
                 } else {
-                    if gamesViewModel.games.results.count > 0 {
+                    if gamesViewModel.games.results.isEmpty {
+                        NoDataView()
+                    } else {
                         ScrollView {
                             LazyVGrid(columns: columns, spacing: 90) {
                                 ForEach(gamesViewModel.games.results, id: \.id) { data in
-                                    NavigationLink(destination: GameDetailView(gameId: data.id,
-                                                                               backgroundImage: data.backgroundImage)) {
+                                    NavigationLink(destination: GameDetailView(gameId: data.id, backgroundImage: data.backgroundImage)) {
                                         GamesRow(game: data)
                                     }
                                 }
                             }.padding(EdgeInsets(top: 48, leading: 16, bottom: 16, trailing: 16))
                         }
-                    } else {
-                        NoDataView()
                     }
                 }
             }.onAppear {
-                self.gamesViewModel.loadGameData()
+                if self.gamesViewModel.games.results.isEmpty {
+                    self.gamesViewModel.loadGameData()
+                }
             }
             .navigationBarTitle("RAWG")
             .navigationBarTitleDisplayMode(.inline)

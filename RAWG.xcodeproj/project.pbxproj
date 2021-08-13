@@ -14,6 +14,7 @@
 		AC3D75B926C5389B001CDD28 /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D75B826C5389B001CDD28 /* GamesViewModel.swift */; };
 		AC3D75BB26C538DE001CDD28 /* GameDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D75BA26C538DE001CDD28 /* GameDetailViewModel.swift */; };
 		AC3D75BD26C53AC3001CDD28 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D75BC26C53AC3001CDD28 /* LoadingIndicator.swift */; };
+		AC50ACBC26C67A7900412C0B /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC50ACBB26C67A7900412C0B /* .swiftlint.yml */; };
 		AC536A6126C39E6D00D71206 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC536A6026C39E6D00D71206 /* AppDelegate.swift */; };
 		AC536A6326C39E6D00D71206 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC536A6226C39E6D00D71206 /* SceneDelegate.swift */; };
 		AC536A6526C39E6D00D71206 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC536A6426C39E6D00D71206 /* ContentView.swift */; };
@@ -44,6 +45,7 @@
 		AC3D75B826C5389B001CDD28 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		AC3D75BA26C538DE001CDD28 /* GameDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailViewModel.swift; sourceTree = "<group>"; };
 		AC3D75BC26C53AC3001CDD28 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		AC50ACBB26C67A7900412C0B /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		AC536A5D26C39E6D00D71206 /* RAWG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RAWG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC536A6026C39E6D00D71206 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC536A6226C39E6D00D71206 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		AC536A5426C39E6D00D71206 = {
 			isa = PBXGroup;
 			children = (
+				AC50ACBB26C67A7900412C0B /* .swiftlint.yml */,
 				AC536A5F26C39E6D00D71206 /* RAWG */,
 				AC536A5E26C39E6D00D71206 /* Products */,
 			);
@@ -265,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC50ACBC26C67A7900412C0B /* .swiftlint.yml in Resources */,
 				AC89110A26C4AA7E00DED4E0 /* Mulish-Regular.ttf in Resources */,
 				AC89110F26C4AA7E00DED4E0 /* Mulish-Bold.ttf in Resources */,
 				AC536A6D26C39E6F00D71206 /* LaunchScreen.storyboard in Resources */,
