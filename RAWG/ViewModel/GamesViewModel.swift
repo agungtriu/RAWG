@@ -5,7 +5,7 @@
 //  Created by Agung Tri Utomo on 12/08/21.
 //
 
-import Combine
+import Foundation
 
 class GamesViewModel: ObservableObject {
     @Published var games =  Games(count: 0, next: "", results: [])
@@ -17,11 +17,13 @@ class GamesViewModel: ObservableObject {
     func loadGameData() {
         self.loading = true
         service.fetchGame { games in
-            self.loading = false
             guard let games = games else {
                 return
             }
-            self.games.results = games
+            DispatchQueue.main.async {
+                self.loading = false
+                self.games.results = games
+            }
         }
     }
 }

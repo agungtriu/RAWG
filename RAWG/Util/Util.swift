@@ -5,7 +5,7 @@
 //  Created by Agung Tri Utomo on 13/08/21.
 //
 
-import SwiftUI
+import Foundation
 
 func convertDateFormat(inputDate: String) -> String {
     var date = ""
