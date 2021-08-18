@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GamesList: View {
     @ObservedObject var gamesViewModel =  GamesViewModel()
-    @ObservedObject var favoriteViewModel = FavoriteViewModel()
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())

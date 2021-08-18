@@ -9,16 +9,17 @@ import SwiftUI
 import URLImage
 
 struct GameDetailView: View {
-    @State var isSaved = true
+    @State var isSaved = false
     var gameId: Int
     var backgroundImage: String
     @ObservedObject var gameDetailViewModel = GameDetailViewModel()
     @ObservedObject var addFavoriteViewModel = AddFavoriteViewModel()
     @ObservedObject var deleteFavoriteViewModel = DeleteFavoriteViewModel()
-    @ObservedObject var favoriteViewModel = FavoriteViewModel()
+    @ObservedObject var favoriteViewModel: FavoriteViewModel
     init(gameId: Int, backgroundImage: String) {
         self.gameId = gameId
         self.backgroundImage = backgroundImage
+        self.favoriteViewModel = FavoriteViewModel(id: self.gameId)
     }
     var genre: some View {
         Group {
@@ -86,8 +87,10 @@ struct GameDetailView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             if gameDetailViewModel.loading {
-                VStack(alignment: .center) {
-                    LoadingIndicator(color: Color.blue, size: 50)
+                if favoriteViewModel.loading {
+                    VStack(alignment: .center) {
+                        LoadingIndicator(color: Color.blue, size: 50)
+                    }
                 }
             } else {
                 if gameDetailViewModel.gameDetail.name.isEmpty {
@@ -137,48 +140,44 @@ struct GameDetailView: View {
                             })
                         }
                     }
+                    .navigationBarItems(
+                        trailing:
+                            self.isSaved ?
+                            Button(action: {
+                                self.isSaved = !self.deleteFavoriteViewModel.deleteFavorites(id: self.gameId)
+                            }, label: {
+                                Image("icon_favorite_solid").imageScale(.large)
+                            })
+                            :
+                            Button(action: {
+                                let favorite: FavoriteModel = FavoriteModel(
+                                    id: Int32(self.gameDetailViewModel.gameDetail.id),
+                                    name: gameDetailViewModel.gameDetail.name,
+                                    release: gameDetailViewModel.gameDetail.released,
+                                    backgroundImage: gameDetailViewModel.gameDetail.backgroundImage,
+                                    metacritic: Int32(gameDetailViewModel.gameDetail.metacritic),
+                                    description: gameDetailViewModel.gameDetail.description,
+                                    developers: gameDetailViewModel.gameDetail.developers,
+                                    publishers: gameDetailViewModel.gameDetail.publishers,
+                                    genres: gameDetailViewModel.gameDetail.genres,
+                                    website: gameDetailViewModel.gameDetail.website
+                                )
+                                self.isSaved = self.addFavoriteViewModel.addFavorite(favorite: favorite)
+                            }, label: {
+                                Image("icon_favorite").imageScale(.large)
+                            })
+                    )
                 }
             }
         }
         .onAppear {
             self.gameDetailViewModel.loadGameDataById(gameId: String(self.gameId))
+            isSaved = self.favoriteViewModel.isStored
+        }
+        .onDisappear {
             self.favoriteViewModel.getFavorite(id: self.gameId)
-            if self.favoriteViewModel.favorite.id == 0 {
-                self.isSaved = false
-            } else {
-                self.isSaved = true
-            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarTitle(Text("RAWG"))
-        .navigationBarItems(
-            trailing:
-                self.favoriteViewModel.favorite.id == 0 || self.isSaved == false ?
-                Button(action: {
-                    let favorite: FavoriteModel = FavoriteModel(
-                        id: Int32(self.gameDetailViewModel.gameDetail.id),
-                        name: gameDetailViewModel.gameDetail.name,
-                        release: gameDetailViewModel.gameDetail.released,
-                        backgroundImage: gameDetailViewModel.gameDetail.backgroundImage,
-                        metacritic: Int32(gameDetailViewModel.gameDetail.metacritic),
-                        description: gameDetailViewModel.gameDetail.description,
-                        developers: gameDetailViewModel.gameDetail.developers,
-                        publishers: gameDetailViewModel.gameDetail.publishers,
-                        genres: gameDetailViewModel.gameDetail.genres,
-                        website: gameDetailViewModel.gameDetail.website
-                    )
-                    self.isSaved = self.addFavoriteViewModel.addFavorite(favorite: favorite)
-                    self.favoriteViewModel.getFavorite(id: self.gameId)
-                }, label: {
-                    Image("icon_favorite").imageScale(.large)
-                })
-                :
-                Button(action: {
-                    self.isSaved = !self.deleteFavoriteViewModel.deleteFavorites(id: self.gameId)
-                    self.favoriteViewModel.getFavorite(id: self.gameId)
-                }, label: {
-                    Image("icon_favorite_solid").imageScale(.large)
-                })
-        )
     }
 }

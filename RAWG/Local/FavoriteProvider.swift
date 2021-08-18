@@ -55,27 +55,17 @@ class FavoriteProvider {
             }
         }
     }
-    func getFavorite(_ id: Int, completion: @escaping(_ favorites: FavoriteModel) -> Void) {
+    func getFavorite(_ id: Int, completion: @escaping(_ bool: Bool) -> Void) {
         let taskContext = newTaskContext()
         taskContext.perform {
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteGame")
             fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "id == \(id)")
             do {
-                if let result = try taskContext.fetch(fetchRequest).first {
-                    let favorite = FavoriteModel(
-                        id: result.value(forKeyPath: "id") as? Int32,
-                        name: result.value(forKeyPath: "name") as? String,
-                        release: result.value(forKeyPath: "releaseDate") as? String,
-                        backgroundImage: result.value(forKeyPath: "backgroundImage") as? String,
-                        metacritic: result.value(forKeyPath: "metacritic") as? Int32,
-                        description: result.value(forKeyPath: "about") as? String,
-                        developers: result.value(forKeyPath: "developers") as? String,
-                        publishers: result.value(forKeyPath: "publishers") as? String,
-                        genres: result.value(forKeyPath: "genres") as? String,
-                        website: result.value(forKeyPath: "website") as? String
-                    )
-                    completion(favorite)
+                if (try taskContext.fetch(fetchRequest).first) != nil {
+                    completion(true)
+                } else {
+                    completion(false)
                 }
             } catch let error as NSError {
                 print("Could not fetch. \(error), \(error.userInfo)")
