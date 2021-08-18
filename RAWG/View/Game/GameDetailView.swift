@@ -87,10 +87,8 @@ struct GameDetailView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             if gameDetailViewModel.loading {
-                if favoriteViewModel.loading {
-                    VStack(alignment: .center) {
-                        LoadingIndicator(color: Color.blue, size: 50)
-                    }
+                VStack(alignment: .center) {
+                    LoadingIndicator(color: Color.blue, size: 50)
                 }
             } else {
                 if gameDetailViewModel.gameDetail.name.isEmpty {
