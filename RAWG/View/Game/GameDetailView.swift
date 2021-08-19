@@ -138,33 +138,6 @@ struct GameDetailView: View {
                             })
                         }
                     }
-                    .navigationBarItems(
-                        trailing:
-                            self.isSaved ?
-                            Button(action: {
-                                self.isSaved = !self.deleteFavoriteViewModel.deleteFavorites(id: self.gameId)
-                            }, label: {
-                                Image("icon_favorite_solid").imageScale(.large)
-                            })
-                            :
-                            Button(action: {
-                                let favorite: FavoriteModel = FavoriteModel(
-                                    id: Int32(self.gameDetailViewModel.gameDetail.id),
-                                    name: gameDetailViewModel.gameDetail.name,
-                                    release: gameDetailViewModel.gameDetail.released,
-                                    backgroundImage: gameDetailViewModel.gameDetail.backgroundImage,
-                                    metacritic: Int32(gameDetailViewModel.gameDetail.metacritic),
-                                    description: gameDetailViewModel.gameDetail.description,
-                                    developers: gameDetailViewModel.gameDetail.developers,
-                                    publishers: gameDetailViewModel.gameDetail.publishers,
-                                    genres: gameDetailViewModel.gameDetail.genres,
-                                    website: gameDetailViewModel.gameDetail.website
-                                )
-                                self.isSaved = self.addFavoriteViewModel.addFavorite(favorite: favorite)
-                            }, label: {
-                                Image("icon_favorite").imageScale(.large)
-                            })
-                    )
                 }
             }
         }
@@ -177,5 +150,32 @@ struct GameDetailView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarTitle(Text("RAWG"))
+        .navigationBarItems(
+            trailing:
+                self.isSaved ?
+                Button(action: {
+                    self.isSaved = !self.deleteFavoriteViewModel.deleteFavorites(id: self.gameId)
+                }, label: {
+                    Image("icon_favorite_solid").imageScale(.large).opacity(self.gameDetailViewModel.loading ? 0 : 1)
+                })
+                :
+                Button(action: {
+                    let favorite: FavoriteModel = FavoriteModel(
+                        id: Int32(self.gameDetailViewModel.gameDetail.id),
+                        name: gameDetailViewModel.gameDetail.name,
+                        release: gameDetailViewModel.gameDetail.released,
+                        backgroundImage: gameDetailViewModel.gameDetail.backgroundImage,
+                        metacritic: Int32(gameDetailViewModel.gameDetail.metacritic),
+                        description: gameDetailViewModel.gameDetail.description,
+                        developers: gameDetailViewModel.gameDetail.developers,
+                        publishers: gameDetailViewModel.gameDetail.publishers,
+                        genres: gameDetailViewModel.gameDetail.genres,
+                        website: gameDetailViewModel.gameDetail.website
+                    )
+                    self.isSaved = self.addFavoriteViewModel.addFavorite(favorite: favorite)
+                }, label: {
+                    Image("icon_favorite").imageScale(.large).opacity(self.gameDetailViewModel.loading ? 0 : 1)
+                })
+        ).disabled(self.gameDetailViewModel.loading ? true : false)
     }
 }

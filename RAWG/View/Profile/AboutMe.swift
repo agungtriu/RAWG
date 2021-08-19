@@ -16,10 +16,6 @@ struct AboutMe: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack {
-                NavigationLink(destination: UserEdit()) {
-                    Image("icon_user_edit").imageScale(.large)
-                }.frame(width: UIScreen.main.bounds.width, alignment: .trailing)
-                .padding(EdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 32))
                 Image("foto")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -59,7 +55,6 @@ struct AboutMe: View {
                 Spacer()
             }
         }
-        .navigationBarHidden(true)
         .onAppear {
             if Profile.name.isEmpty {
                 Profile.name = "Agung Tri Utomo"

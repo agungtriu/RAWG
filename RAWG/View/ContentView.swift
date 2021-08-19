@@ -54,6 +54,14 @@ struct ContentView: View {
             }
             .navigationBarTitle("RAWG")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                trailing:
+                    NavigationLink(destination: UserEdit()) {
+                        Image("icon_user_edit")
+                            .opacity(selectedIndex == 2 ? 1 : 0)
+                            .imageScale(.large)
+                    }.disabled(selectedIndex == 2 ? false : true)
+            )
         }
     }
 }
