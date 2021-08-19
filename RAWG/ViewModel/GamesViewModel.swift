@@ -17,11 +17,11 @@ class GamesViewModel: ObservableObject {
     func loadGameData() {
         self.loading = true
         service.fetchGame { games in
-            guard let games = games else {
-                return
-            }
             DispatchQueue.main.async {
                 self.loading = false
+                guard let games = games else {
+                    return
+                }
                 self.games.results = games
             }
         }

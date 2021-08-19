@@ -24,27 +24,15 @@ class ApiService: ServiceProtocol {
             }
             var developers: String = ""
             if game.developers != nil {
-                game.developers!.forEach({(developer) in
-                    if developer.name != nil {
-                        developers += developer.name!+", "
-                    }
-                })
+                developers = game.developers!.map({$0.name ?? ""}).joined(separator: ", ")
             }
             var publishers: String = ""
             if game.publishers != nil {
-                game.publishers!.forEach({(publisher) in
-                    if publisher.name != nil {
-                        publishers += publisher.name!+", "
-                    }
-                })
+                publishers = game.publishers!.map({$0.name ?? ""}).joined(separator: ", ")
             }
             var genres: String = ""
             if game.genres != nil {
-                game.genres!.forEach({ (genre) in
-                    if genre.name != nil {
-                        genres += genre.name!+", "
-                    }
-                })
+                genres = game.genres!.map({$0.name ?? ""}).joined(separator: ", ")
             }
             let gameDetail = GameDetail(
                 id: game.id ?? 0,
@@ -79,7 +67,8 @@ class ApiService: ServiceProtocol {
                 games.append(Game(
                     id: result.id ?? 0,
                     name: result.name ?? "",
-                    released: result.released ?? "", backgroundImage: result.backgroundImage ?? "Unavailable!",
+                    released: result.released ?? "",
+                    backgroundImage: result.backgroundImage ?? "Unavailable!",
                     metacritic: result.metacritic ?? 0
                 ))
             })

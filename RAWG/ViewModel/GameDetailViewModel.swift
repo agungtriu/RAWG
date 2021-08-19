@@ -24,11 +24,11 @@ class GameDetailViewModel: ObservableObject {
     func loadGameDataById(gameId: String) {
         self.loading = true
         service.fetchGameById(gameId: gameId) { gameDetail in
-            guard let gameDetail = gameDetail else {
-                return
-            }
             DispatchQueue.main.async {
                 self.loading = false
+                guard let gameDetail = gameDetail else {
+                    return
+                }
                 self.gameDetail = gameDetail
             }
         }
